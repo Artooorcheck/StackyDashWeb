@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="TemplateData/style.css">
     <script type="text/javascript" src="https://www.youtube.com/game_api/v1"></script>
     <script type="text/javascript" src="unarchiver.min.js"></script>
-    <script type="text/javascript" src="lib/youtubelib.js"></script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -59,11 +58,11 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/4.9.60.loader.js";
+      var loaderUrl = buildUrl + "/4.9.72.loader.js";
       var config = {
-        dataUrl: buildUrl + "/4.9.60.data.zip",
-        frameworkUrl: buildUrl + "/4.9.60.framework.js",
-        codeUrl: buildUrl + "/4.9.60.wasm.zip",
+        dataUrl: buildUrl + "/4.9.72.data" + ".zip",
+        frameworkUrl: buildUrl + "/4.9.72.framework.js",
+        codeUrl: buildUrl + "/4.9.72.wasm" + ".zip",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Born2Play",
         productName: "StackyDash",
@@ -168,9 +167,6 @@
             progressBarFull.style.width = 100 * progress + "%";
           }).then((unityInstance) => {
             unityGameInstance = unityInstance;
-            CloudLoad();
-            ytgame.game.firstFrameReady();
-            ytgame.game.gameReady();
             loadingBar.style.display = "none";
             fullscreenButton.onclick = () => {
               unityInstance.SetFullscreen(1);
