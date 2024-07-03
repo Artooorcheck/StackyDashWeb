@@ -179,6 +179,14 @@
       }
 
       loadResources(InitUnitySection);
+
+      
+      window.onfocus = function() {
+        unityGameInstance.SendMessage("YTGameWrapper", "ReceiveOnResumeEvent");
+      };
+      window.onblur = function() {
+        unityGameInstance.SendMessage("YTGameWrapper", "ReceiveOnPauseEvent");
+      };
     </script>
   </body>
 </html>
