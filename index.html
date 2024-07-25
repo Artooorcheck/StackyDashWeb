@@ -7,7 +7,6 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <script type="text/javascript" src="https://www.youtube.com/game_api/v1"></script>
-    <script type="text/javascript" src="unarchiver.min.js"></script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -101,60 +100,6 @@
 
       loadingBar.style.display = "block";
 
-      
-      loadResources = (callback) => {
-
-        var codeUrl = config.codeUrl;
-        var shouldDecompress = true;
-
-        let processedCount = 0;
-
-        let readyDefiner = () => {
-          processedCount++;
-          if(processedCount === 2) {
-            callback();
-          }
-        }
-
-        DecompressFile(config.codeUrl, 'application/wasm', (file) => {
-          config.codeUrl = file;
-          readyDefiner();
-        });
-          
-        DecompressFile(config.dataUrl, 'application/data', (file) => {
-          config.dataUrl = file;
-          readyDefiner();
-        });
-        }
-
-        // Fetch/Load a file then call our callback 
-      loadData = (url, callback) => {
-        fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-          callback(blob);
-        });
-      }
-
-        // decompress files and call callback
-        // TODO: test and potentially switch to Compression Streams API
-      function DecompressFile(file, blobMimeType, callback) {
-        let decompressedFile;
-
-        loadData(file, (f) => {
-          Unarchiver.open(f).then(async function (archive) {
-            for (let entry of archive.entries) {
-              if (entry.is_file) {
-                let entryRead = await entry.read();
-                let entryData = await entryRead.arrayBuffer();
-                let dataBlob = new Blob([new Uint8Array(entryData)], { type: blobMimeType });
-                decompressedFile = window.URL.createObjectURL(dataBlob);
-              }
-            }
-            callback(decompressedFile);
-          });
-        });
-      }
 
       var unityGameInstance = null;
 
